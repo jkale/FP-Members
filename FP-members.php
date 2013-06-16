@@ -62,9 +62,16 @@
 		    }
 			
 			function fp_members_register_admin_pages() {
-				add_menu_page( 'FP Members', 'Page Settings', 'manage_options', 'custom_page', array( &$this, 'fp_members_options_view' ), plugins_url( 'myplugin/images/icon.png' ), 100 );
+				$menu_slug = 'fp-members-dashboard';
+				
+				add_menu_page( 'FP Members', 'Members', 'manage_options', $menu_slug, array( $this, 'fp_members_dashboard_view' ), plugins_url( 'myplugin/images/icon.png' ), 100 );
+				add_submenu_page( $menu_slug, 'Page Settings', 'Pages', 'manage_options', 'fp-page-settings', array( $this, 'fp_members_options_view' ));
 			}
-		
+			
+			function fp_members_dashboard_view() {
+				echo '<div class="wrap">HELLO</div>';
+			}
+			
 			/** Draws up the menu options page */
 			function fp_members_options_view() {
 				if ( !current_user_can( 'manage_options' ) )  {
