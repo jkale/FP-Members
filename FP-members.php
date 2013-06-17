@@ -1,4 +1,5 @@
 <?php
+	require_once 'classes/class.members.php';
 	/**
 	 *	Factory Pattern Members
 	 *
@@ -15,6 +16,9 @@
 		class FP_Members {
 		
 			function __construct() {
+				
+				load_plugin_textdomain('fp-members', false, basename( dirname( __FILE__ ) ) . '/languages' );
+				
 				add_filter( 'admin_init', array( $this, 'fp_members_admin_init' ) );
 				
 				add_action('wp_loaded', array( $this, 'fp_members_roles' ) );
@@ -69,7 +73,14 @@
 			}
 			
 			function fp_members_dashboard_view() {
-				echo '<div class="wrap">HELLO</div>';
+				if ( !current_user_can( 'manage_options' ) )  {
+					wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+				}
+				
+				settings_fields('fp-members-dashboard');
+				do_settings_sections('plugin');
+				
+				include dirname(__FILE__)."/views/dashboard.php";
 			}
 			
 			/** Draws up the menu options page */
@@ -220,6 +231,24 @@
 					// Return the content from the protected page if the redirect fails
 					return $protected_page->post_content;
 				endif;
+			}
+			
+			function fp_members_output_members_log() {
+				$model = new Members();
+				$members = $model->get_all_members();
+				
+				foreach ($members as $member) {
+					//var_dump($member);
+					echo "[".strftime( '%r %e %h %Y' ,strtotime( $member->user_registered ) )."] ";
+					echo "<strong>".$member->display_name."</strong> joined.";
+				}
+			}
+			
+			function fp_members_output_members_count() {
+				$model = new Members();
+				$members = $model->get_role_count();
+				
+				return $members;
 			}
 		    
 		}

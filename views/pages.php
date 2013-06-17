@@ -1,6 +1,6 @@
 <div class="wrap">
 	<?php
-		echo "<div id=\"icon-options-general\" class=\"icon32\"><br></div><h2>" . __( 'FP Members', 'plugin-name' ) . " ". __( 'Page Settings', 'page-settings' ) . "</h2>";
+		echo "<div id=\"icon-options-general\" class=\"icon32\"><br></div><h2>" . __( 'FP Members', 'fp-members' ) . " ". __( 'Page Settings', 'fp-members' ) . "</h2>";
 	?>
 	<form name="form1" method="post" action="">
 		<input type="hidden" name="data_submitted" value="Y">
