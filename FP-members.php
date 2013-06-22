@@ -1,5 +1,8 @@
 <?php
 	require_once 'classes/class.members.php';
+	require_once 'gateways/paypal/class.fp-paypal.php';
+	require_once 'classes/registration-actions.php';
+	
 	/**
 	 *	Factory Pattern Members
 	 *
@@ -41,6 +44,11 @@
 				add_filter( 'the_content', array( $this, 'fp_members_filter_content' ) );
 				
 				add_action( 'admin_menu', array( $this, 'fp_members_register_admin_pages' ) );
+				
+				/*		Registration & login action/filters	*/
+				//add_action( 'register_form', 'fp_add_payment_button' );
+				
+				//add_filter( 'registration_redirect', 'fp_registration_pay' );
 			}
 			
 		    /**
