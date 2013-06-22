@@ -1,3 +1,6 @@
 [submodule "libs/paypal-digital-goods"]
 	path = libs/paypal-digital-goods
 	url = git://github.com/thenbrent/paypal-digital-goods.git
+[submodule "libs/php-paypal-ipn"]
+	path = libs/php-paypal-ipn
+	url = https://jkale@github.com/Quixotix/PHP-PayPal-IPN.git
