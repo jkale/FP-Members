@@ -2,6 +2,7 @@
 	require_once 'classes/class.members.php';
 	require_once 'gateways/paypal/class.fp-paypal.php';
 	require_once 'classes/registration-actions.php';
+	require_once 'classes/class.shortcodes.php';
 	
 	/**
 	 *	Factory Pattern Members
@@ -49,6 +50,13 @@
 				//add_action( 'register_form', 'fp_add_payment_button' );
 				
 				//add_filter( 'registration_redirect', 'fp_registration_pay' );
+				
+				/*	Show admin bar only for admins and editors	*/
+				//if ( !current_user_can('edit_posts') ) {
+				    add_filter('show_admin_bar', '__return_false');
+				//}
+				
+				$shortcodes = new FP_Shortcodes();
 			}
 			
 		    /**
