@@ -1,7 +1,7 @@
 <div class="wrap nosubsub">
 	<?php screen_icon(); ?>
 	<?php
-		echo "<div id=\"icon-index\" class=\"icon32\"><br></div><h2>" . __( 'FP Members', 'fp-members' ) . " ". __( 'Dashboard', 'fp-members' ) . "</h2>";
+		echo "<div id=\"icon-index\" class=\"icon32\"><br></div><h2>" . __( 'Dovetail', 'dovetail' ) . " ". __( 'Dashboard', 'dovetail' ) . "</h2>";
 	?>
 	<div id="dashboard-widgets-wrap">
 		<div class="metabox-holder" id="dashboard-widgets">

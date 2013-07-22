@@ -25,6 +25,8 @@
 				
 				add_filter( 'admin_init', array( $this, 'fp_members_admin_init' ) );
 				
+				add_action('init', array( $this, 'dovetail_membership_level_custom_post' ) , 0);
+				
 				add_action('wp_loaded', array( $this, 'fp_members_roles' ) );
 				
 				// We don't want to exclude display if they're looking at items in the admin interface
@@ -44,7 +46,7 @@
 				ob_start();
 				add_filter( 'the_content', array( $this, 'fp_members_filter_content' ) );
 				
-				add_action( 'admin_menu', array( $this, 'fp_members_register_admin_pages' ) );
+				add_action( 'admin_menu', array( $this, 'fp_members_register_admin_pages' ), 5 );
 				
 				/*		Registration & login action/filters	*/
 				//add_action( 'register_form', 'fp_add_payment_button' );
@@ -70,7 +72,8 @@
 		      	include_once( plugin_dir_path( __FILE__ ) . 'classes/class.admin-edit-menu-walker.php');
 				/* Include the page functions	*/
 				include_once( plugin_dir_path( __FILE__ ) . 'classes/class.page-functions.php');
-
+				/* Include the role functions	*/
+				include_once( plugin_dir_path( __FILE__ ) . 'classes/class.role-editor.php');
 		    }
 
 			/**
@@ -85,7 +88,7 @@
 				$menu_slug = 'fp-members-dashboard';
 				
 				add_menu_page( 
-					'FP Members', 
+					'Dovetail', 
 					'Dovetail', 
 					'manage_options', 
 					$menu_slug, 
@@ -98,7 +101,7 @@
 					'Page Settings', 
 					'Pages', 
 					'manage_options', 
-					'fp-page-settings', 
+					'dovetail-page-settings', 
 					array( $this, 'fp_members_options_view' )
 				);
 				add_submenu_page( 
@@ -106,7 +109,7 @@
 					'Page Settings', 
 					'Access', 
 					'manage_options', 
-					'fp-page-access', 
+					'dovetail-page-access', 
 					array( $this, 'fp_dovetail_access' )
 				);
 
@@ -240,6 +243,8 @@
 				add_role('member', 'Member', array(
 					'read' 			=> true
 				));
+				
+				
 			}
 			
 			function fp_members_filter_content( $content ) {
@@ -297,6 +302,43 @@
 				
 				return $members;
 			}
+			
+			function dovetail_membership_level_custom_post() {
+			
+				// set the singular and plural label 
+				$name = array(
+					'singular'	=> 'Member Level',
+					'plural'	=> 'Member Levels'
+				);
+
+				$args = array(
+					'labels' => array(
+						// set the various label values
+						'name'			=> $name['plural'],
+						'singular_name'		=> $name['singular'],
+						'add_new'		=> 'Add ' . $name['singular'], 'report',
+						'add_new_item'		=> 'Add New ' . $name['singular'],
+						'edit_item'		=> 'Edit ' . $name['singular'],
+						'new_item'		=> 'New ' . $name['singular'],
+						'view_item'		=> 'View ' . $name['singular'],
+						'search_items'		=> 'Search ' . $name['plural'],
+						// the next two values should be lowercase
+						'not_found'		=> 'No ' . strtolower($name['plural']) . ' found',
+						'not_found_in_trash'	=> 'No ' . strtolower($name['plural']) . ' found in Trash', 
+						'parent_item_colon'	=> ''
+					),
+					'supports' 	=> array('revisions', 'title', 'editor', 'excerpt', 'thumbnail'),
+					'public'		=> TRUE,
+					'publicly_queryable'	=> TRUE,
+					'show_ui'		=> TRUE,
+					'show_in_menu'	=> 'fp-members-dashboard',
+					
+				);
+
+				// register the post type along with it's arguments
+				register_post_type('member-level', $args);
+			
+			}// end of dovetail_membership_level_custom_post()
 		    
 		}
 		
