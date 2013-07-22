@@ -1,4 +1,6 @@
 <?php 
+	require_once( dirname( __FILE__ ).'/class.fp-paypal.php' );
+	
 	$fp_pp = new FP_PayPal();
 	$paypal_purchase = $fp_pp->subscription_payment();
 	

@@ -84,8 +84,32 @@
 			function fp_members_register_admin_pages() {
 				$menu_slug = 'fp-members-dashboard';
 				
-				add_menu_page( 'FP Members', 'Members', 'manage_options', $menu_slug, array( $this, 'fp_members_dashboard_view' ), plugins_url( 'myplugin/images/icon.png' ), 100 );
-				add_submenu_page( $menu_slug, 'Page Settings', 'Pages', 'manage_options', 'fp-page-settings', array( $this, 'fp_members_options_view' ));
+				add_menu_page( 
+					'FP Members', 
+					'Dovetail', 
+					'manage_options', 
+					$menu_slug, 
+					array( $this, 'fp_members_dashboard_view' ), 
+					plugins_url( 'myplugin/images/icon.png' ), 
+					100 
+				);
+				add_submenu_page( 
+					$menu_slug, 
+					'Page Settings', 
+					'Pages', 
+					'manage_options', 
+					'fp-page-settings', 
+					array( $this, 'fp_members_options_view' )
+				);
+				add_submenu_page( 
+					$menu_slug, 
+					'Page Settings', 
+					'Access', 
+					'manage_options', 
+					'fp-page-access', 
+					array( $this, 'fp_dovetail_access' )
+				);
+
 			}
 			
 			function fp_members_dashboard_view() {
@@ -97,6 +121,13 @@
 				do_settings_sections('plugin');
 				
 				include dirname(__FILE__)."/views/dashboard.php";
+			}
+			
+			function fp_dovetail_access() {
+				wp_enqueue_style( 'colors' );
+				echo '<div class="nav-menus-php">';
+				include dirname(__FILE__)."/../../../wp-admin/nav-menus.php";
+				echo '</div>';
 			}
 			
 			/** Draws up the menu options page */
