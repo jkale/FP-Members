@@ -1,6 +1,7 @@
 <?php
 	require_once 'class.roles.php';
 	require_once dirname( __FILE__ ).'/../views/helpers/admin/roles/roles.php';
+
 	
 	/**
 	 * Creates the membership levels interface where you can edit all the 
