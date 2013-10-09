@@ -44,6 +44,7 @@
 		        add_filter( 'wp_setup_nav_menu_item', array( $this, 'fp_members_setup_nav_item' ) );
 		
 				ob_start();
+				
 				add_filter( 'the_content', array( $this, 'fp_members_filter_content' ) );
 				
 				add_action( 'admin_menu', array( $this, 'fp_members_register_admin_pages' ), 5 );
@@ -239,11 +240,11 @@
 		    }
 		
 			function fp_members_roles() {
+				
 				// create a new role for Members
 				add_role('member', 'Member', array(
 					'read' 			=> true
 				));
-				
 				
 			}
 			

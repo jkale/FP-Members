@@ -27,5 +27,6 @@
 			
 			return $roles;
 		}
+		
 	}
 ?>

@@ -1,4 +1,7 @@
 <?php
+	require_once 'class.roles.php';
+	require_once '../views/helpers/admin/roles/roles.php';
+	
 	/**
 	 * Creates the membership levels interface where you can edit all the 
 	 * details on that role.
@@ -21,7 +24,7 @@
 			function dovetail_role_editor_init() {
 				
 				add_action('init', 'dovetail_membership_level_custom_post', 0);
-		
+				add_action('add_meta_boxes', 'add_roles_meta_box', 10);
 			}
 		
 			function dovetail_membership_level_custom_post() {
@@ -59,6 +62,25 @@
 				register_post_type('member-level', $args);
 			
 			}// end of dovetail_membership_level_custom_post()
+			
+			function after_role_creation() {
+				$slug = 'member-level';
+
+			    // If this isn't a 'book' post, don't update it.
+			    if ( $slug != $_POST['post_type'] ) {
+			        return;
+			    }
+				
+				$roles = New Dovetail_Roles();
+				
+				$roles->create_role(  );
+			}
+			
+			function add_roles_meta_box( ) {
+				echo "BUNNY";
+				add_meta_box('desi_capabilities', 'Capabilities', 'desi_roles_check', 'member-level', 'side', 'default');
+				
+			}
 			
 		} // End of class
 	
