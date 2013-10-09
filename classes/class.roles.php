@@ -13,7 +13,7 @@
 		 */
 		function create_role( $name, $capabilities ) {
 			
-			add_role( $name, ucwords( strtolower( $name ) ), $capabilities );
+			return add_role( $name, ucwords( strtolower( $name ) ), $capabilities );
 			
 		}
 		

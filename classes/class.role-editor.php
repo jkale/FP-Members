@@ -15,7 +15,10 @@
 			function __construct() {
 			
 				add_action('init', 'dovetail_membership_level_custom_post', 0);
-			
+				
+				add_action('add_meta_boxes', array( &$this, 'add_roles_meta_box' ), 10);
+				
+				add_action( 'save_post', array( &$this, 'after_role_creation' ) );
 			}
 	
 	
@@ -25,7 +28,6 @@
 			function dovetail_role_editor_init() {
 				
 				add_action('init', 'dovetail_membership_level_custom_post', 0);
-				add_action('add_meta_boxes', 'add_roles_meta_box', 10);
 			}
 		
 			function dovetail_membership_level_custom_post() {
@@ -74,11 +76,19 @@
 				
 				$roles = New Dovetail_Roles();
 				
-				$roles->create_role(  );
+				$caps = array();
+				
+				foreach ($_POST['capabilities'] as $cap => $value) {
+					
+					if ( $value == "on" )
+						$caps[$cap] = true; 
+				}
+				
+				$role = $roles->create_role( $_POST["post_title"], $caps );
 			}
 			
 			function add_roles_meta_box( ) {
-				echo "BUNNY";
+				
 				add_meta_box('desi_capabilities', 'Capabilities', 'desi_roles_check', 'member-level', 'side', 'default');
 				
 			}
