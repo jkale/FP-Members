@@ -146,9 +146,13 @@
 
 			        // Read their posted value
 					$restricted_page_id = stripslashes($_POST[ "restricted_page_id" ]);
+					$restricted_message = stripslashes($_POST[ "restricted_message" ]);
 					
 					if ( isset( $restricted_page_id ) )
 			        	update_option( "fp_members_restricted_page_id", $restricted_page_id ); // Save the posted value in the database
+			
+					if ( isset( $restricted_message ) )
+			        	update_option( "dovetail_restricted_message", $restricted_message ); // Save the posted value in the database
 
 			        // Put an settings updated message on the screen
 				?>
@@ -158,6 +162,7 @@
 				}
 
 				$restricted_page_id = get_option("fp_members_restricted_page_id");
+				$restricted_message = get_option("dovetail_restricted_message");
 
 				include dirname(__FILE__)."/views/pages.php";
 			}

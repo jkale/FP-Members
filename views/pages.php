@@ -24,6 +24,12 @@
 				?>
 			</select>
 		</p>
+		
+		<p>
+			<label for="restricted_page">With this message</label>
+			
+			<input type="text" value="<?php echo $restricted_message ?>" name="restricted_message" />
+		</p>
 
 		<p class="submit">
 			<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
