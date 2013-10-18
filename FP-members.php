@@ -272,6 +272,7 @@
 					return $content;
 				else :
 					$restricted_page_id = get_option("fp_members_restricted_page_id");
+					$restricted_message = get_option("dovetail_restricted_message");
 					
 					if ( isset( $restricted_page_id  ) ) :
 						$protected_page = get_page( $restricted_page_id );
@@ -281,7 +282,7 @@
 					
 					if ( isset( $protected_page ) ) :
 						// Redirect to the protected page chosen
-						wp_redirect( get_permalink( $protected_page->ID ) );
+						wp_redirect( get_permalink( $protected_page->ID )."?dovetail-msg=".$restricted_message );
 					else :
 						wp_redirect( home_url() );
 					endif;
