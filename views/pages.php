@@ -6,7 +6,7 @@
 		<input type="hidden" name="data_submitted" value="Y">
 		
 		<p>
-			<label for="restricted_page">Restricted Page</label>
+			<label for="restricted_page">If denied access, redirect to this page</label>
 			
 			<?php
 				$pages = get_pages();

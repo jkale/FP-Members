@@ -5,14 +5,14 @@
 	require_once 'classes/class.shortcodes.php';
 	
 	/**
-	 *	Factory Pattern Members
+	 *	Dovetail
 	 *
 	 *
-	 *	Plugin Name: Factory Pattern Members
-	 *	Plugin URI: http://factorypattern.co.uk/plugins/fp-members
-	 *	Description: Factory Pattern Members adds basic yet beautiful membership tools to your WordPress website. Use and enjoy.
+	 *	Plugin Name: Dovetail
+	 *	Plugin URI: http://factorypattern.co.uk/plugins/dovetail
+	 *	Description: Dovetail adds basic yet beautiful membership tools to your WordPress website. Use and enjoy.
 	 *	Author: Factory Pattern
-	 *	Version: 1.0
+	 *	Version: 1.1
 	 *	Author URI: http://factorypattern.co.uk
 	 */
 	if ( ! class_exists( "FP_Members" ) ) :
