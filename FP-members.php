@@ -59,6 +59,8 @@
 				    add_filter('show_admin_bar', '__return_false');
 				//}
 				
+				//add_action('get_header', array( $this, 'dovetail_display_errors' ), 100 );
+				
 				$shortcodes = new FP_Shortcodes();
 			}
 			
@@ -272,7 +274,7 @@
 					return $content;
 				else :
 					$restricted_page_id = get_option("fp_members_restricted_page_id");
-					$restricted_message = get_option("dovetail_restricted_message");
+					$restricted_message = urlencode( get_option("dovetail_restricted_message") );
 					
 					if ( isset( $restricted_page_id  ) ) :
 						$protected_page = get_page( $restricted_page_id );
@@ -346,6 +348,13 @@
 				register_post_type('member-level', $args);
 			
 			}// end of dovetail_membership_level_custom_post()
+			
+			function dovetail_display_errors() {
+				
+				if ( key_exists( "dovetail-msg", $_GET ) )
+					echo $_GET["dovetail-msg"];
+				
+			}// end of dovetail_display_errors()
 		    
 		}
 		
