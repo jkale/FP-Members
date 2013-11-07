@@ -170,18 +170,21 @@
 			}
 		
 			function fp_members_filter_menu_items( $items, $menu, $args ) {
-				// print_r( $items );
+				//print_r( $items );
 				// Iterate over the items to search and destroy
 				foreach ( $items as $key => $item ) {
 					
 					if( isset( $item->roles ) ) {
-
+						
 						switch( $item->roles ) {
 							case 'in' :
 								$visible = is_user_logged_in() ? true : false;
 							break;
 							case 'out' :
 								$visible = ! is_user_logged_in() ? true : false;
+							break;
+							case 'anyone' :
+								$visible = true;
 							break;
 							default:
 								$visible = false;
@@ -222,7 +225,15 @@
 		                if ( array_key_exists ( $role, $allowed_roles ) ) $custom_roles[] = $role;
 		            }
 		            if ( ! empty ( $custom_roles ) ) $saved_data = $custom_roles;
-		        }
+		        } elseif ( isset( $_POST['nav-menu-logged-in-out'][$menu_item_db_id] ) && in_array( $_POST['nav-menu-logged-in-out'][$menu_item_db_id], array( 'anyone' )  ) ) {
+			
+					$saved_data = $_POST['nav-menu-logged-in-out'][$menu_item_db_id];
+					
+				} else {
+					
+					$saved_data = $_POST['nav-menu-logged-in-out'][$menu_item_db_id];
+					
+				}
 
 		        if ( $saved_data ) {
 		            update_post_meta( $menu_item_db_id, '_nav_menu_role', $saved_data );
