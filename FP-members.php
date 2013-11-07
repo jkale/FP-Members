@@ -3,6 +3,7 @@
 	require_once 'gateways/paypal/class.fp-paypal.php';
 	require_once 'classes/registration-actions.php';
 	require_once 'classes/class.shortcodes.php';
+	require_once dirname( __FILE__ ).'/../../../wp-includes/pluggable.php';
 	
 	/**
 	 *	Dovetail
@@ -55,9 +56,9 @@
 				//add_filter( 'registration_redirect', 'fp_registration_pay' );
 				
 				/*	Show admin bar only for admins and editors	*/
-				//if ( !current_user_can('edit_posts') ) {
+				if ( !current_user_can('edit_posts') ) {
 				    add_filter('show_admin_bar', '__return_false');
-				//}
+				}
 				
 				//add_action('get_header', array( $this, 'dovetail_display_errors' ), 100 );
 				
