@@ -5,14 +5,14 @@
 	require_once 'classes/class.shortcodes.php';
 	
 	/**
-	 *	Factory Pattern Members
+	 *	Dovetail
 	 *
 	 *
-	 *	Plugin Name: Factory Pattern Members
-	 *	Plugin URI: http://factorypattern.co.uk/plugins/fp-members
-	 *	Description: Factory Pattern Members adds basic yet beautiful membership tools to your WordPress website. Use and enjoy.
+	 *	Plugin Name: Dovetail
+	 *	Plugin URI: http://factorypattern.co.uk/plugins/dovetail
+	 *	Description: Dovetail adds basic yet beautiful membership tools to your WordPress website. Use and enjoy.
 	 *	Author: Factory Pattern
-	 *	Version: 1.0
+	 *	Version: 1.1
 	 *	Author URI: http://factorypattern.co.uk
 	 */
 	if ( ! class_exists( "FP_Members" ) ) :
@@ -58,6 +58,8 @@
 				//if ( !current_user_can('edit_posts') ) {
 				    add_filter('show_admin_bar', '__return_false');
 				//}
+				
+				//add_action('get_header', array( $this, 'dovetail_display_errors' ), 100 );
 				
 				$shortcodes = new FP_Shortcodes();
 			}
@@ -146,9 +148,13 @@
 
 			        // Read their posted value
 					$restricted_page_id = stripslashes($_POST[ "restricted_page_id" ]);
+					$restricted_message = stripslashes($_POST[ "restricted_message" ]);
 					
 					if ( isset( $restricted_page_id ) )
 			        	update_option( "fp_members_restricted_page_id", $restricted_page_id ); // Save the posted value in the database
+			
+					if ( isset( $restricted_message ) )
+			        	update_option( "dovetail_restricted_message", $restricted_message ); // Save the posted value in the database
 
 			        // Put an settings updated message on the screen
 				?>
@@ -158,6 +164,7 @@
 				}
 
 				$restricted_page_id = get_option("fp_members_restricted_page_id");
+				$restricted_message = get_option("dovetail_restricted_message");
 
 				include dirname(__FILE__)."/views/pages.php";
 			}
@@ -267,6 +274,7 @@
 					return $content;
 				else :
 					$restricted_page_id = get_option("fp_members_restricted_page_id");
+					$restricted_message = urlencode( get_option("dovetail_restricted_message") );
 					
 					if ( isset( $restricted_page_id  ) ) :
 						$protected_page = get_page( $restricted_page_id );
@@ -276,7 +284,7 @@
 					
 					if ( isset( $protected_page ) ) :
 						// Redirect to the protected page chosen
-						wp_redirect( get_permalink( $protected_page->ID ) );
+						wp_redirect( get_permalink( $protected_page->ID )."?dovetail-msg=".$restricted_message );
 					else :
 						wp_redirect( home_url() );
 					endif;
@@ -340,6 +348,13 @@
 				register_post_type('member-level', $args);
 			
 			}// end of dovetail_membership_level_custom_post()
+			
+			function dovetail_display_errors() {
+				
+				if ( key_exists( "dovetail-msg", $_GET ) )
+					echo $_GET["dovetail-msg"];
+				
+			}// end of dovetail_display_errors()
 		    
 		}
 		

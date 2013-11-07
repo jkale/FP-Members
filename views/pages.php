@@ -6,7 +6,7 @@
 		<input type="hidden" name="data_submitted" value="Y">
 		
 		<p>
-			<label for="restricted_page">Restricted Page</label>
+			<label for="restricted_page">If denied access, redirect to this page</label>
 			
 			<?php
 				$pages = get_pages();
@@ -23,6 +23,12 @@
 					}
 				?>
 			</select>
+		</p>
+		
+		<p>
+			<label for="restricted_page">With this message</label>
+			
+			<input type="text" value="<?php echo $restricted_message ?>" name="restricted_message" />
 		</p>
 
 		<p class="submit">
