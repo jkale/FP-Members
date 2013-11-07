@@ -94,7 +94,7 @@
 					'manage_options', 
 					$menu_slug, 
 					array( $this, 'fp_members_dashboard_view' ), 
-					plugins_url( 'myplugin/images/icon.png' ), 
+					plugins_url( 'dovetail/assets/images/logo/DOVE-icon.png' ), 
 					100 
 				);
 				add_submenu_page( 
