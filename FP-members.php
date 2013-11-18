@@ -1,5 +1,6 @@
 <?php
 	require_once 'classes/class.members.php';
+	require_once 'classes/class.member.php';
 	require_once 'gateways/paypal/class.fp-paypal.php';
 	require_once 'classes/registration-actions.php';
 	require_once 'classes/class.shortcodes.php';
