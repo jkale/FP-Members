@@ -41,8 +41,10 @@
 		    if ( !wp_verify_nonce( $_POST['pf_tactical_picker_noncename'], plugin_basename(__FILE__) ))
 		        return $post_id;
 		
+			$prev_setting = get_post_meta($post_id, 'available_roles', true);
+		
 			// return if there's no setting
-			if ( !isset( $_POST['picked_role'] ) ) 
+			if ( !isset( $_POST['picked_role'] ) && $prev_setting == false ) 
 				return $post_id;
 	
 		    // next check for an autosave; if so - don't do anything

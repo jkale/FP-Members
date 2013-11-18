@@ -4,6 +4,7 @@
 	require_once 'gateways/paypal/class.fp-paypal.php';
 	require_once 'classes/registration-actions.php';
 	require_once 'classes/class.shortcodes.php';
+	require_once dirname( __FILE__ ).'/../../../wp-includes/pluggable.php';
 	
 	/**
 	 *	Dovetail
@@ -56,9 +57,9 @@
 				//add_filter( 'registration_redirect', 'fp_registration_pay' );
 				
 				/*	Show admin bar only for admins and editors	*/
-				//if ( !current_user_can('edit_posts') ) {
+				if ( !current_user_can('edit_posts') ) {
 				    add_filter('show_admin_bar', '__return_false');
-				//}
+				}
 				
 				//add_action('get_header', array( $this, 'dovetail_display_errors' ), 100 );
 				
@@ -171,18 +172,21 @@
 			}
 		
 			function fp_members_filter_menu_items( $items, $menu, $args ) {
-				// print_r( $items );
+				//print_r( $items );
 				// Iterate over the items to search and destroy
 				foreach ( $items as $key => $item ) {
 					
 					if( isset( $item->roles ) ) {
-
+						
 						switch( $item->roles ) {
 							case 'in' :
 								$visible = is_user_logged_in() ? true : false;
 							break;
 							case 'out' :
 								$visible = ! is_user_logged_in() ? true : false;
+							break;
+							case 'anyone' :
+								$visible = true;
 							break;
 							default:
 								$visible = false;
@@ -223,7 +227,15 @@
 		                if ( array_key_exists ( $role, $allowed_roles ) ) $custom_roles[] = $role;
 		            }
 		            if ( ! empty ( $custom_roles ) ) $saved_data = $custom_roles;
-		        }
+		        } elseif ( isset( $_POST['nav-menu-logged-in-out'][$menu_item_db_id] ) && in_array( $_POST['nav-menu-logged-in-out'][$menu_item_db_id], array( 'anyone' )  ) ) {
+			
+					$saved_data = $_POST['nav-menu-logged-in-out'][$menu_item_db_id];
+					
+				} else {
+					
+					$saved_data = $_POST['nav-menu-logged-in-out'][$menu_item_db_id];
+					
+				}
 
 		        if ( $saved_data ) {
 		            update_post_meta( $menu_item_db_id, '_nav_menu_role', $saved_data );

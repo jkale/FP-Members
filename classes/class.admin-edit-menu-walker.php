@@ -188,6 +188,12 @@ function start_el(&$output, $item, $depth, $args) {
 
             $logged_in_out = ! is_array( $roles ) ? $roles : false;
 
+			if ( $roles == "anyone" || $roles == "" ) :
+				$anyone = "anyone"; 
+			else : 
+				$anyone = "";
+			endif;
+
 			?>
 
 			<input type="hidden" name="nav-menu-role-nonce" value="<?php echo wp_create_nonce( 'nav-menu-nonce-name' ); ?>" />
@@ -198,6 +204,10 @@ function start_el(&$output, $item, $depth, $args) {
 				<span class="nav-menu-roles description"><?php _e( "Limit display of this menu item to users who are logged in or out, or customize by role.", 'nav-menu-roles' ); ?></span>
 				
 				<div>
+					<label for="nav_menu_anyone-<?php echo $item->ID ;?>">
+	                    <input type="radio" name="nav-menu-logged-in-out[<?php echo $item->ID ;?>]" id="nav_menu_anyone-<?php echo $item->ID ;?>" <?php checked( "anyone", $anyone ); ?> value="anyone" />
+	                            <?php _e( 'Anyone', 'nav-menu-roles'); ?>
+	                </label><br />
 	                <label for="nav_menu_logged_out-for-<?php echo $item->ID ;?>">
 	                    <input type="radio" name="nav-menu-logged-in-out[<?php echo $item->ID ;?>]" id="nav_menu_logged_out-for-<?php echo $item->ID ;?>" <?php checked( 'out', $logged_in_out ); ?> value="out" />
 	                            <?php _e( 'All Logged Out', 'nav-menu-roles'); ?>
@@ -207,7 +217,7 @@ function start_el(&$output, $item, $depth, $args) {
 	                            <?php _e( 'All Logged In', 'nav-menu-roles'); ?>
 	                </label><br />
 	                <label for="nav_menu_by_role-for-<?php echo $item->ID ;?>">
-	                    <input type="radio" name="nav-menu-logged-in-out[<?php echo $item->ID ;?>]" id="nav_menu_by_role-for-<?php echo $item->ID ;?>" <?php checked( '', $logged_in_out ); ?> value="" />
+	                    <input type="radio" name="nav-menu-logged-in-out[<?php echo $item->ID ;?>]" id="nav_menu_by_role-for-<?php echo $item->ID ;?>" <?php if ( is_array( $checked_roles ) ) : echo "checked=checked"; endif; ?> value="" />
 	                            <?php _e( 'By Role', 'nav-menu-roles'); ?>
 	                </label>
 				</div>
