@@ -48,6 +48,15 @@
 			
 		}
 		
+		/*
+		 *	Returns the first name of the user
+		 */
+		public function first_name() {
+			
+			return $this->first_name;
+			
+		}
+		
 	}
 
 ?>
